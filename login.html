@@ -1,9 +1,16 @@
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-	<title>LandMate</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8">
+
+	<!-- Javascript SDKs-->
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> 
+	<script src="js/amazon-cognito-auth.min.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+	<script src="js/amazon-cognito-identity.min.js"></script>   
+	<script src="js/config.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 <!--===============================================================================================-->
@@ -26,24 +33,36 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
-</head>
-<body>
+
+  </head>
+  <body>
+
+
+      
+      
+     
+
+
+
+	
+	
+	
 	
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
 			<div class="wrap-login100 p-t-30 p-b-50">
 				<span class="login100-form-title p-b-41">
-					Upload documents
+					Login
 				</span>
 				<form class="login100-form validate-form p-b-33 p-t-5">
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="username" placeholder="User name">
+						<input class="input100" type="text" id="inputUsername"  placeholder="Email address" name="username" required autofocus>
 						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+				<input class="input100"  type="password" id="inputPassword"  placeholder="Password" name="password" required>    
 						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
 					</div>
 
@@ -54,17 +73,56 @@
 					</div>
 					
 					<div class="container-login100-form-btn m-t-32">
-						<button class="login100-form-btn">
-							<a href = "Option.html" class="login100-form-btn"> Signup </a>
-						</button>
-					</div>
+					<a href ="Option.html"> <button class="login100-form-btn" type="button" onclick="signInButton()">Sign up</button>
+					</a></div>
 
 				</form>
 			</div>
 		</div>
 	</div>
 	
+	
+	
+	
+	
+	
+	
 
+<script>
+  function signInButton() {
+    
+	var authenticationData = {
+        Username : document.getElementById("inputUsername").value,
+        Password : document.getElementById("inputPassword").value,
+    };
+	
+    var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+    
+	var poolData = {
+        UserPoolId : _config.cognito.userPoolId, // Your user pool id here
+        ClientId : _config.cognito.clientId, // Your client id here
+    };
+	
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+	
+    var userData = {
+        Username : document.getElementById("inputUsername").value,
+        Pool : userPool,
+    };
+	
+    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    
+	cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: function (result) {
+			var accessToken = result.getAccessToken().getJwtToken();
+			console.log(accessToken);	
+        },
+        onFailure: function(err) {
+            alert(err.message || JSON.stringify(err));
+        },
+    });
+  }
+</script>
 	<div id="dropDownSelect1"></div>
 	
 <!--===============================================================================================-->
@@ -83,35 +141,5 @@
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
-
-	<script>
-			var attributeList = [];
-		 
-		var dataEmail = {
-			Name : 'email',
-			Value : '...' // your email here
-		};
-		var dataPhoneNumber = {
-			Name : 'phone_number',
-			Value : '...' // your phone number here with +country code and no delimiters in front
-		};
-		var attributeEmail = 
-		new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
-		var attributePhoneNumber = 
-		new AmazonCognitoIdentity.CognitoUserAttribute(dataPhoneNumber);
-		 
-		attributeList.push(attributeEmail);
-		attributeList.push(attributePhoneNumber);
-		 
-		var cognitoUser;
-		userPool.signUp('username', 'password', attributeList, null, function(err, result){
-			if (err) {
-				alert(err);
-				return;
-			}
-			cognitoUser = result.user;
-			console.log('user name is ' + cognitoUser.getUsername());
-		});
-	</script>
 </body>
 </html>

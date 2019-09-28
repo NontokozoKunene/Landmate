@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
 	<title>LandMate</title>
 	<meta charset="UTF-8">
@@ -25,31 +25,52 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-
-
-<html>
+<!--===============================================================================================-->
+</head>
 <body>
-
-		Upload documents
-		<div class="limiter">
-		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+	
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('images/soshanguve.jpg');">
 			<div class="wrap-login100 p-t-30 p-b-50">
 				<span class="login100-form-title p-b-41">
+									
+					<div class="wrap-input100 validate-input" data-validate = "Location">
+						<input class="input100" type="text" name="location" placeholder="Enter Location">
+						<span class="focus-input100" ></span>
+					</div>
 					
-				</span>
-			
-		
-<br><form action="/action_page.php"><br/>
-<p style="color:DodgerBlue;">UPLOAD ID:  </p> 
-    <input type="file" name="pic" accept="image/*">
-<p style="color:DodgerBlue;"> UPLOAD PROOF OF RESIDENCE: </p>  
-  <input type="file" name="pic2" accept="image/*">     
- 
-  <input type="submit">
-</form>
+					<div class="container-login100-form-btn m-t-32">
+						<button class="login100-form-btn">
+							Search location
+						</button>
+					</div>
+                  
+				</form>
+				</div>
+				<iframe src="https://www.google.com/maps/d/embed?mid=1OH9aYhLyGUr8_Ru3VWW9xRdiuc9txJ5L" width="740" height="480"></iframe>
+			</div>
+		</div>
+	</div>
+	
 
-<p><strong>Note:</strong>  Only certified documents will be considered!</p>
-
+	<div id="dropDownSelect1"></div>
+	
+<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
 
 </body>
 </html>
